@@ -1,55 +1,47 @@
-﻿namespace OOP_Assignment2_Part2.Classes;
+﻿namespace Movie_Ticket_Booking_System.Classes;
 
 internal class Ticket
 {
-    private string _movieName;
-    private double _price;
-    private static int ticketCounter = 0;
-    public string MovieName
+    private static int _nextTicketId = 1;
+    private readonly int _ticketId;
+    private decimal _price;
+    private double _priceAfterTax;
+    public string MovieName { get; set; }
+    public Ticket(string movieName, decimal price)
     {
-        get { return _movieName; }
-        set
-        {
-            // If an invalid value is set, keep the previous value.
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                _movieName = value;
-            }
-        }
-    }
-    public TicketType Type { get; set; }
-    public SeatLocation Seat { get; set; }
-    public double Price
-    {
-        get { return _price; }
-        set
-        {
-            // If an invalid value is set, keep the previous value.
-            if (value > 0)
-            {
-                _price = value;
-            }
-        }
+        _ticketId = _nextTicketId++;
+        MovieName = movieName;
+        _price = price;
+        PriceAfterTax = (double)price;
     }
     public double PriceAfterTax
     {
-        get { return Math.Round(_price * 1.14, 1); }
+        get { return _priceAfterTax; }
+        private set
+        {
+            _priceAfterTax = value * 1.14;
+        }
     }
-    public int TicketId { get; private set; }
-
-    public Ticket(string MovieName, TicketType Type, int SeatLocationNumber, char SeatLocationRow, double Price)
+    public void SetPrice(decimal price)
     {
-        Seat = new SeatLocation(SeatLocationRow, SeatLocationNumber);
-        this.MovieName = MovieName;
-        this.Type = Type;
-        this.Price = Price;
-
-        ticketCounter++;
-        TicketId = ticketCounter;
+        if (price > 0)
+        {
+            _price = price;
+            PriceAfterTax = (double)_price;
+            Console.WriteLine($"Setting price directly: {_price}");
+        }
     }
-
-    public static int GetTotalTicketsSold()
+    public void SetPrice(decimal priceBase, decimal multiplier)
     {
-        return ticketCounter;
+        if (priceBase > 0 && multiplier > 1)
+        {
+            _price = priceBase * multiplier;
+            PriceAfterTax = (double)_price;
+            Console.WriteLine($"Setting price directly: {priceBase} x {multiplier} = {_price}");
+        }
+    }
+    public virtual string PrintTicket(Ticket t)
+    {
+        return $"Ticket #{t._ticketId} | {t.MovieName} | Price: {t._price} EGP | After Tax: {t.PriceAfterTax:F2} EGP";
     }
 }

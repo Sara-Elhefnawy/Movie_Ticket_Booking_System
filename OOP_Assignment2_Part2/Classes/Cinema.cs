@@ -1,54 +1,29 @@
-﻿namespace OOP_Assignment2_Part2.Classes;
+﻿namespace Movie_Ticket_Booking_System.Classes;
 
 internal class Cinema
 {
-    private readonly Ticket[] _tickets = new Ticket[20];
-
-    public Ticket this[int index]
+    private Projector projector;
+    public void AddTicket(Ticket t)
     {
-        get
+        projector.TicketList.Add(t);
+    }
+    public void PrintAllTickets()
+    {
+        Console.WriteLine("\n========== All Tickets ==========\n");
+        foreach (var ticket in projector.TicketList)
         {
-            if (index >= 0 && index < _tickets.Length)
-                return _tickets[index];
-            return null!;
-        }
-        set
-        {
-            if (index >= 0 && index < _tickets.Length)
-            {
-                _tickets[index] = value;
-            }
+            Console.WriteLine(ticket.PrintTicket(ticket));
         }
     }
-    public Ticket GetMovieByName(string movieName)
+    public void OpenCinema()
     {
-        if (string.IsNullOrWhiteSpace(movieName))
-        {
-            return null!;
-        }
-        for (int i = 0; i < _tickets.Length; i++)
-        {
-            if (_tickets[i] != null &&
-                _tickets[i].MovieName != null &&
-                _tickets[i].MovieName.Equals(movieName, StringComparison.OrdinalIgnoreCase))
-            {
-                return _tickets[i];
-            }
-        }
-        return null!;
-    }
-    public bool AddTicket(Ticket t)
-    {
-        if (t == null) return false;
+        Console.WriteLine("========== Cinema Opened ==========");
 
-        for (int i = 0; i < _tickets.Length; i++)
-        {
-            if (_tickets[i] == null)
-            {
-                _tickets[i] = t;
-                return true;
-            }
-        }
-        return false;
+        projector = new Projector();
+    }
+    public void CloseCinema() => Console.WriteLine("========== Cinema Closed ==========");
+    public static void ProcessTicket(Ticket t)
+    {
+        Console.WriteLine(t?.PrintTicket(t));
     }
 }
