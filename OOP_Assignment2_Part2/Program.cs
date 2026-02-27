@@ -16,7 +16,7 @@ internal class Program
 
         Console.WriteLine("========== SetPrice Test ==========\n");
         standardTicket.SetPrice(150);
-        standardTicket.SetPrice(100, (decimal)1.5);
+        standardTicket.SetPrice(100, 1.5m);
 
         cinema.AddTicket(standardTicket);
         cinema.AddTicket(vipTicket);
