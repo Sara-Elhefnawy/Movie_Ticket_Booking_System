@@ -1,6 +1,8 @@
-﻿namespace Movie_Ticket_Booking_System.Classes;
+﻿using Movie_Ticket_Booking_System.Interfaces;
 
-internal class Ticket
+namespace Movie_Ticket_Booking_System.Classes;
+
+internal class Ticket : IPrintable
 {
     private static int _nextTicketId = 1;
     private readonly int _ticketId;
@@ -40,7 +42,7 @@ internal class Ticket
             Console.WriteLine($"Setting price directly: {priceBase} x {multiplier} = {_price}");
         }
     }
-    public virtual string PrintTicket(Ticket t)
+    public virtual string Print(Ticket t)
     {
         return $"Ticket #{t._ticketId} | {t.MovieName} | Price: {t._price} EGP | After Tax: {t.PriceAfterTax:F2} EGP";
     }

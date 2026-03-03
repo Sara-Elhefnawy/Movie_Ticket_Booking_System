@@ -12,7 +12,7 @@ internal class Cinema
         Console.WriteLine("\n========== All Tickets ==========\n");
         foreach (var ticket in projector.TicketList)
         {
-            Console.WriteLine(ticket.PrintTicket(ticket));
+            Console.WriteLine(ticket.Print(ticket));
         }
     }
     public void OpenCinema()
@@ -24,6 +24,6 @@ internal class Cinema
     public void CloseCinema() => Console.WriteLine("========== Cinema Closed ==========");
     public static void ProcessTicket(Ticket t)
     {
-        Console.WriteLine(t?.PrintTicket(t));
+        Console.WriteLine(t?.Print(t));
     }
 }

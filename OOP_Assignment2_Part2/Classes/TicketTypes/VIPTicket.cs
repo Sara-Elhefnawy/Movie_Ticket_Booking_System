@@ -1,6 +1,8 @@
-﻿namespace Movie_Ticket_Booking_System.Classes.TicketTypes;
+﻿using Movie_Ticket_Booking_System.Interfaces;
 
-internal class VIPTicket : Ticket
+namespace Movie_Ticket_Booking_System.Classes.TicketTypes;
+
+internal class VIPTicket : Ticket, IPrintable
 {
     public bool LoungeAccess { get; set; }
     public decimal ServiceFee { get; set; }
@@ -9,9 +11,9 @@ internal class VIPTicket : Ticket
         LoungeAccess = true;
         ServiceFee = 50;
     }
-    public override string PrintTicket(Ticket t)
+    public override string Print(Ticket t)
     {
-        string test = base.PrintTicket(t);
+        string test = base.Print(t);
         return test + $" | Lounge: {LoungeAccess} | Service Fee: {ServiceFee} EGP";
     }
 }
