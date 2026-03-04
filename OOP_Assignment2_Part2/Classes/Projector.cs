@@ -7,6 +7,5 @@ internal class Projector
     public Projector()
     {
         TicketList = new List<Ticket>(20);
-        Console.WriteLine("Projector started.\r\n \r\n");
     }
 }

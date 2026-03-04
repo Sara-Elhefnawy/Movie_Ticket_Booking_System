@@ -1,20 +1,39 @@
-﻿using Movie_Ticket_Booking_System.Interfaces;
+﻿using Movie_Ticket_Booking_System.Enums;
+using Movie_Ticket_Booking_System.Interfaces;
 
 namespace Movie_Ticket_Booking_System.Classes;
 
-internal class Ticket : IPrintable
+internal class Ticket : IPrintable, IBookable, ICloneable
 {
     private static int _nextTicketId = 1;
     private readonly int _ticketId;
     private decimal _price;
     private double _priceAfterTax;
+    private TicketStatus _status;
     public string MovieName { get; set; }
+    public decimal Price
+    {
+        get { return _price; }
+        protected set
+        {
+            if (value > 0)
+                _price = value;
+        }
+    }
+    public bool IsBooked
+    {
+        get
+        {
+            return _status == TicketStatus.Booked;
+        }
+    }
     public Ticket(string movieName, decimal price)
     {
         _ticketId = _nextTicketId++;
         MovieName = movieName;
-        _price = price;
+        _price = price > 0 ? price : 0;
         PriceAfterTax = (double)price;
+        _status = TicketStatus.Available;
     }
     public double PriceAfterTax
     {
@@ -24,26 +43,33 @@ internal class Ticket : IPrintable
             _priceAfterTax = value * 1.14;
         }
     }
-    public void SetPrice(decimal price)
+    public virtual string Print()
     {
-        if (price > 0)
-        {
-            _price = price;
-            PriceAfterTax = (double)_price;
-            Console.WriteLine($"Setting price directly: {_price}");
-        }
+        string bookedStatus = IsBooked ? "Yes" : "No";
+        return $"[Ticket #{_ticketId}] {MovieName} | Price: {_price} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStatus}";
     }
-    public void SetPrice(decimal priceBase, decimal multiplier)
+    public bool Book()
     {
-        if (priceBase > 0 && multiplier > 1)
+        if (_status == TicketStatus.Available)
         {
-            _price = priceBase * multiplier;
-            PriceAfterTax = (double)_price;
-            Console.WriteLine($"Setting price directly: {priceBase} x {multiplier} = {_price}");
+            _status = TicketStatus.Booked;
+            return true;
         }
+        return false;
     }
-    public virtual string Print(Ticket t)
+
+    public bool Cancel()
     {
-        return $"Ticket #{t._ticketId} | {t.MovieName} | Price: {t._price} EGP | After Tax: {t.PriceAfterTax:F2} EGP";
+        if (_status == TicketStatus.Booked)
+        {
+            _status = TicketStatus.Available;
+            return true;
+        }
+        return false;
+    }
+    public object Clone()
+    {
+        Ticket clone = new Ticket(this.MovieName, this._price);
+        return clone;
     }
 }

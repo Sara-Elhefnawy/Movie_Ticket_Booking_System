@@ -1,9 +1,11 @@
-﻿namespace Movie_Ticket_Booking_System.Classes;
+﻿using Movie_Ticket_Booking_System.Interfaces;
 
-internal class BookingHelper
+namespace Movie_Ticket_Booking_System.Classes;
+
+internal static class BookingHelper
 {
     private static int _count = 1;
-    public static int GetCount() => _count;
+    //public static int GetCount() => _count;
     public static double CalcGroupDiscount(int numberOfTickets, double pricePerTicket)
     {
         double totalPrice = numberOfTickets * pricePerTicket;
@@ -17,11 +19,13 @@ internal class BookingHelper
     {
         return $"BK-{_count++}";
     }
-    public void PrintAll(Ticket[] array)
+    public static void PrintAll(IPrintable[] printableItems)
     {
-        foreach (var ticket in array)
+        Console.WriteLine("--- BookingHelper.PrintAll ---");
+        foreach (var item in printableItems)
         {
-            ticket.Print(ticket);
+            Console.WriteLine(item.Print());
         }
+        Console.WriteLine();
     }
 }

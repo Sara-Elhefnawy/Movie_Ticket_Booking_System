@@ -1,5 +1,6 @@
 ﻿using Movie_Ticket_Booking_System.Classes;
 using Movie_Ticket_Booking_System.Classes.TicketTypes;
+using Movie_Ticket_Booking_System.Interfaces;
 
 namespace Movie_Ticket_Booking_System;
 
@@ -14,9 +15,9 @@ internal class Program
         VIPTicket vipTicket = new("Avengers", 200);
         IMAXTicket imaxTicket = new("Dune", 180, false);
 
-        Console.WriteLine("========== SetPrice Test ==========\n");
-        standardTicket.SetPrice(150);
-        standardTicket.SetPrice(100, 1.5m);
+        standardTicket.Book();
+        vipTicket.Book();
+        imaxTicket.Book();
 
         cinema.AddTicket(standardTicket);
         cinema.AddTicket(vipTicket);
@@ -24,8 +25,20 @@ internal class Program
 
         cinema.PrintAllTickets();
 
-        Console.WriteLine("\n========== Process Single Ticket ==========\n");
-        Cinema.ProcessTicket(vipTicket);
+        Console.WriteLine("========== Clone Test ==========\n");
+        VIPTicket vipClone = (VIPTicket)vipTicket.Clone();
+        vipClone.MovieName = "Interstellar";
+
+        Console.WriteLine($"Original : {vipTicket.Print()}");
+        Console.WriteLine($"Clone    : {vipClone.Print()}\n");
+
+        Console.WriteLine("========== After Cancellation ==========\n");
+
+        standardTicket.Cancel();
+        Console.WriteLine($"{standardTicket.Print()}\n");
+
+        IPrintable[] printableTickets = new IPrintable[] { standardTicket, vipTicket, imaxTicket };
+        BookingHelper.PrintAll(printableTickets);
 
         cinema.CloseCinema();
     }

@@ -11,9 +11,12 @@ internal class VIPTicket : Ticket, IPrintable
         LoungeAccess = true;
         ServiceFee = 50;
     }
-    public override string Print(Ticket t)
+    public override string Print()
     {
-        string test = base.Print(t);
-        return test + $" | Lounge: {LoungeAccess} | Service Fee: {ServiceFee} EGP";
+        return base.Print() + $" | VIP | Lounge: {(LoungeAccess ? "Yes" : "No")} | Fee: {ServiceFee}";
+    }
+    public new object Clone()
+    {
+        return new VIPTicket(this.MovieName, Price);
     }
 }

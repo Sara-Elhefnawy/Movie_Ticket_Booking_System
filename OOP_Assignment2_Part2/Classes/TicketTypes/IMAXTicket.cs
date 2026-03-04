@@ -1,20 +1,21 @@
-﻿using Movie_Ticket_Booking_System.Interfaces;
+﻿namespace Movie_Ticket_Booking_System.Classes.TicketTypes;
 
-namespace Movie_Ticket_Booking_System.Classes.TicketTypes;
-
-internal class IMAXTicket : Ticket, IPrintable
+internal class IMAXTicket : Ticket
 {
     public bool Is3D { get; set; }
-    public IMAXTicket(string movieName, decimal price, bool is3D) : base(movieName, price)
+
+    public IMAXTicket(string movieName, decimal price, bool is3D = true)
+        : base(movieName, is3D ? price + 30 : price)
     {
-        if (is3D)
-        {
-            price += 30;
-        }
+        Is3D = is3D;
     }
-    public override string Print(Ticket t)
+
+    public override string Print()
     {
-        string test = base.Print(t);
-        return test + $" | IMAX 3D: {Is3D}";
+        return base.Print() + $" | IMAX | 3D: {(Is3D ? "Yes" : "No")}";
+    }
+    public new object Clone()
+    {
+        return new IMAXTicket(this.MovieName, Price, this.Is3D);
     }
 }

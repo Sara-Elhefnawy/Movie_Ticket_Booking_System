@@ -8,10 +8,15 @@ internal class StandardTicket : Ticket, IPrintable
     public StandardTicket(string movieName, decimal price, string seatNumber) : base(movieName, price)
     {
         SeatNumber = seatNumber;
+
     }
-    public override string Print(Ticket t)
+    public override string Print()
     {
-        string test = base.Print(t);
-        return test + $" | Seat: {SeatNumber}";
+        return base.Print() + $" | Seat: {SeatNumber}";
     }
+    public new object Clone()
+    {
+        return new StandardTicket(this.MovieName, Price, this.SeatNumber);
+    }
+
 }
