@@ -11,9 +11,9 @@ internal class Program
         Cinema cinema = new();
         cinema.OpenCinema();
 
-        StandardTicket standardTicket = new("Inception", 150, "A-5");
+        StandardTicket standardTicket = new("Inception", 80, "A-5");
         VIPTicket vipTicket = new("Avengers", 200);
-        IMAXTicket imaxTicket = new("Dune", 180, false);
+        IMAXTicket imaxTicket = new("Dune", 130, false);
 
         standardTicket.Book();
         vipTicket.Book();

@@ -8,9 +8,13 @@ internal class Ticket : IPrintable, IBookable, ICloneable
     private static int _nextTicketId = 1;
     private readonly int _ticketId;
     private decimal _price;
-    private double _priceAfterTax;
     private TicketStatus _status;
     public string MovieName { get; set; }
+    public decimal PriceAfterTax { get; private set; }
+    private void ApplyTax(decimal percentage)
+    {
+        PriceAfterTax = Price * percentage;
+    }
     public decimal Price
     {
         get { return _price; }
@@ -32,16 +36,8 @@ internal class Ticket : IPrintable, IBookable, ICloneable
         _ticketId = _nextTicketId++;
         MovieName = movieName;
         _price = price > 0 ? price : 0;
-        PriceAfterTax = (double)price;
+        ApplyTax(1.14m);
         _status = TicketStatus.Available;
-    }
-    public double PriceAfterTax
-    {
-        get { return _priceAfterTax; }
-        private set
-        {
-            _priceAfterTax = value * 1.14;
-        }
     }
     public virtual string Print()
     {
