@@ -5,7 +5,6 @@ namespace Movie_Ticket_Booking_System.Classes;
 internal static class BookingHelper
 {
     private static int _count = 1;
-    //public static int GetCount() => _count;
     public static double CalcGroupDiscount(int numberOfTickets, double pricePerTicket)
     {
         double totalPrice = numberOfTickets * pricePerTicket;
@@ -24,7 +23,7 @@ internal static class BookingHelper
         Console.WriteLine("--- BookingHelper.PrintAll ---");
         foreach (var item in printableItems)
         {
-            Console.WriteLine(item.Print());
+            item.Print();
         }
         Console.WriteLine();
     }

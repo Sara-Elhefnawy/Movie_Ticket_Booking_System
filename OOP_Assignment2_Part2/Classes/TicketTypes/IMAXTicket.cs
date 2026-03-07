@@ -10,9 +10,10 @@ internal class IMAXTicket : Ticket
         Is3D = is3D;
     }
 
-    public override string Print()
+    public override void Print()
     {
-        return base.Print() + $" | IMAX | 3D: {(Is3D ? "Yes" : "No")}";
+        base.Print();
+        Console.WriteLine($" | IMAX | 3D: {(Is3D ? "Yes" : "No")}");
     }
     public new object Clone()
     {

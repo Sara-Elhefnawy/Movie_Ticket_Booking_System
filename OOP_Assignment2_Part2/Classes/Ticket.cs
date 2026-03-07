@@ -39,10 +39,10 @@ internal class Ticket : IPrintable, IBookable, ICloneable
         ApplyTax(1.14m);
         _status = TicketStatus.Available;
     }
-    public virtual string Print()
+    public virtual void Print()
     {
         string bookedStatus = IsBooked ? "Yes" : "No";
-        return $"[Ticket #{_ticketId}] {MovieName} | Price: {_price} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStatus}";
+        Console.Write($"[Ticket #{_ticketId}] {MovieName} | Price: {_price} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStatus}");
     }
     public bool Book()
     {

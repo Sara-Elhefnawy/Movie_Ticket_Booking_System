@@ -2,5 +2,5 @@
 
 internal interface IPrintable
 {
-    string Print();
+    void Print();
 }

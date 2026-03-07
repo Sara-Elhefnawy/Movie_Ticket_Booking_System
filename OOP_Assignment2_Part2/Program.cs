@@ -29,15 +29,19 @@ internal class Program
         VIPTicket vipClone = (VIPTicket)vipTicket.Clone();
         vipClone.MovieName = "Interstellar";
 
-        Console.WriteLine($"Original : {vipTicket.Print()}");
-        Console.WriteLine($"Clone    : {vipClone.Print()}\n");
+        Console.Write("Original :");
+        vipTicket.Print();
+
+        Console.Write("\n\nClone    : \n");
+        vipClone.Print();
 
         Console.WriteLine("========== After Cancellation ==========\n");
 
         standardTicket.Cancel();
-        Console.WriteLine($"{standardTicket.Print()}\n");
+        Console.Write("\n");
+        standardTicket.Print();
 
-        IPrintable[] printableTickets = new IPrintable[] { standardTicket, vipTicket, imaxTicket };
+        IPrintable[] printableTickets = [standardTicket, vipTicket, imaxTicket];
         BookingHelper.PrintAll(printableTickets);
 
         cinema.CloseCinema();

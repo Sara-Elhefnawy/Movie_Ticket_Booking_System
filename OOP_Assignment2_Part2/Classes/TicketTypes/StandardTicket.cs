@@ -10,9 +10,10 @@ internal class StandardTicket : Ticket, IPrintable
         SeatNumber = seatNumber;
 
     }
-    public override string Print()
+    public override void Print()
     {
-        return base.Print() + $" | Seat: {SeatNumber}";
+        base.Print();
+        Console.WriteLine($" | Seat: {SeatNumber}");
     }
     public new object Clone()
     {
