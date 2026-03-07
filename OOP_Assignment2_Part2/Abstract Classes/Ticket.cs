@@ -3,12 +3,13 @@ using Movie_Ticket_Booking_System.Interfaces;
 
 namespace Movie_Ticket_Booking_System.Classes;
 
-internal class Ticket : IPrintable, IBookable, ICloneable
+internal abstract class Ticket : IPrintable, IBookable
 {
     private static int _nextTicketId = 1;
     private readonly int _ticketId;
+
     private decimal _price;
-    private TicketStatus _status;
+    internal TicketStatus _status;
     public string MovieName { get; set; }
     public decimal PriceAfterTax { get; private set; }
     private void ApplyTax(decimal percentage)
@@ -24,13 +25,6 @@ internal class Ticket : IPrintable, IBookable, ICloneable
                 _price = value;
         }
     }
-    public bool IsBooked
-    {
-        get
-        {
-            return _status == TicketStatus.Booked;
-        }
-    }
     public Ticket(string movieName, decimal price)
     {
         _ticketId = _nextTicketId++;
@@ -39,12 +33,12 @@ internal class Ticket : IPrintable, IBookable, ICloneable
         ApplyTax(1.14m);
         _status = TicketStatus.Available;
     }
+    
     public virtual void Print()
     {
-        string bookedStatus = IsBooked ? "Yes" : "No";
-        Console.Write($"[Ticket #{_ticketId}] {MovieName} | Price: {_price} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStatus}");
+        Console.Write($"[Ticket #{_ticketId}] {MovieName} | Price: {_price} | After Tax: {PriceAfterTax:F2} | Booked: {_status}");
     }
-    public bool Book()
+    public virtual bool Book()
     {
         if (_status == TicketStatus.Available)
         {
@@ -54,7 +48,7 @@ internal class Ticket : IPrintable, IBookable, ICloneable
         return false;
     }
 
-    public bool Cancel()
+    public virtual bool Cancel()
     {
         if (_status == TicketStatus.Booked)
         {
@@ -63,9 +57,5 @@ internal class Ticket : IPrintable, IBookable, ICloneable
         }
         return false;
     }
-    public object Clone()
-    {
-        Ticket clone = new Ticket(this.MovieName, this._price);
-        return clone;
-    }
+    public abstract decimal CalculatePrice();
 }

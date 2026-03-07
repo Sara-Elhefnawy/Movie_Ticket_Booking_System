@@ -16,8 +16,8 @@ internal class VIPTicket : Ticket, IPrintable
         base.Print();
         Console.Write($" | VIP | Lounge: {(LoungeAccess ? "Yes" : "No")} | Fee: {ServiceFee}");
     }
-    public new object Clone()
+    public override decimal CalculatePrice()
     {
-        return new VIPTicket(this.MovieName, Price);
+        return PriceAfterTax;
     }
 }

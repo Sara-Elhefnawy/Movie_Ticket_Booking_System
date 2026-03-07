@@ -13,11 +13,10 @@ internal class StandardTicket : Ticket, IPrintable
     public override void Print()
     {
         base.Print();
-        Console.WriteLine($" | Seat: {SeatNumber}");
+        Console.Write($" | Seat: {SeatNumber}");
     }
-    public new object Clone()
+    public override decimal CalculatePrice()
     {
-        return new StandardTicket(this.MovieName, Price, this.SeatNumber);
+         return PriceAfterTax;
     }
-
 }
