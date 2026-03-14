@@ -40,12 +40,13 @@ internal class Program
         }
 
         // e. Call an extension method on a ticket to generate a receipt string and print it.
-        Console.WriteLine("--- Extension Method: Receipt ---"); 
-        vipTicket.FormattedReceipt();
+        Console.WriteLine("--- Extension Method: Receipt ---");
+        Console.WriteLine(vipTicket.FormattedReceipt());
 
         // f. Call an extension method on the ticket array to calculate and print the total revenue.
-        Console.WriteLine("--- Extension Method: Total Revenue ---"); 
-        cinema.Statistics().TotalRevenue();
+        Console.WriteLine("--- Extension Method: Total Revenue ---");
+        Console.WriteLine($"Total Revenue: {cinema.Statistics().TotalRevenue()}");
+
 
         // g. Close the Cinema.
         cinema.CloseCinema();

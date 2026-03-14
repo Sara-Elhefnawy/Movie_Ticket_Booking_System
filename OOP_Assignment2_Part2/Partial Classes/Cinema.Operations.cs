@@ -12,7 +12,7 @@ internal partial class Cinema
         {
             if (_tickets[i] == null)
             {
-                _tickets[_ticketCount] = t;
+                _tickets[i] = t;
                 _ticketCount++;
                 return true;
             }
